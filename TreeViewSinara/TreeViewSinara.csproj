@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\PreactorPrj\ФуксОйл\Preactor\PreactorProject1\PreactorRepositoryService.DAL\PreactorRepositoryService.DAL.csproj">
+      <Project>{C78BC818-5C71-4BCD-99FA-BCD106B12624}</Project>
+      <Name>PreactorRepositoryService.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
