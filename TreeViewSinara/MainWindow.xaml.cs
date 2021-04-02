@@ -30,7 +30,7 @@ namespace TreeViewSinara
             ItemCollection allNodes = treeView.Items;
 
             var groupedList = from bomNode in list
-                              orderby bomNode.level
+                              orderby bomNode.level, bomNode.RequiredPartNo
                               group bomNode by bomNode.level;
 
             Dictionary<string, List<TreeViewItem>> itemChildCollection = new Dictionary<string, List<TreeViewItem>>();
@@ -42,52 +42,43 @@ namespace TreeViewSinara
                 TreeViewItem itemChild = new TreeViewItem();
                 foreach (var bomItem in partNoGroupItem)
                 {
-                    if (itemChildCollection.ContainsKey(bomItem.RequiredPartNo))
+                    itemChild = new TreeViewItem();
+                    itemChild.Tag = bomItem.level;
+                    itemChild.Header = bomItem.RequiredPartNo;
+                    if (itemChildCollection.ContainsKey(bomItem.PartNo))
                     {
-                        foreach (var itemsInnerColl in itemChildCollection[bomItem.PartNo])
+                        List<TreeViewItem> itemsInnerColl = itemChildCollection[bomItem.PartNo];
+                        foreach (TreeViewItem el in itemsInnerColl)
                         {
-                            itemChild = new TreeViewItem();
-                            itemChild.Tag = bomItem.level;
-                            itemChild.Header = bomItem.RequiredPartNo;
-                            itemsInner = itemsInnerColl.Items;
-                            itemsInner?.Add(itemChild);
-
+                            itemsInner = el.Items;
+                            itemsInner.Add(itemChild);
                             if (itemChildCollection.ContainsKey(bomItem.RequiredPartNo))
-                            {
                                 itemChildCollection[bomItem.RequiredPartNo].Add(itemChild);
-                            }
                             else
                             {
                                 itemChildCollection[bomItem.RequiredPartNo] = new List<TreeViewItem>();
                                 itemChildCollection[bomItem.RequiredPartNo].Add(itemChild);
+
                             }
-
-
                         }
+
+
 
                     }
                     else
                     {
-                        itemChild = new TreeViewItem();
-                        itemChild.Tag = bomItem.level;
-                        itemChild.Header = bomItem.RequiredPartNo;
-                        itemsInner?.Add(itemChild);
-
+                        itemsInner.Add(itemChild);
                         if (itemChildCollection.ContainsKey(bomItem.RequiredPartNo))
-                        {
                             itemChildCollection[bomItem.RequiredPartNo].Add(itemChild);
-                        }
                         else
                         {
                             itemChildCollection[bomItem.RequiredPartNo] = new List<TreeViewItem>();
                             itemChildCollection[bomItem.RequiredPartNo].Add(itemChild);
+
                         }
-
-
+                        itemsInner = itemChild.Items;
 
                     }
-
-
 
                 }//foreach
                 treeView.Items.Add(item);
