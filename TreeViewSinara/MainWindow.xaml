@@ -5,9 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreeViewSinara"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TreeView x:Name="treeView" HorizontalAlignment="Left" Height="370" Margin="30,30,0,0" VerticalAlignment="Top" Width="725" Tag="true"/>
+        Title="Проверка ПБД Дерева спецификаций по детали"
+        Width="1000"
+        Height="800"
+        >
+    <Window.Resources>
+        <DataTemplate x:Key="tSel">
 
+            <Grid ShowGridLines="True">
+                <StackPanel Orientation="Vertical" Margin="5px" >
+                    <StackPanel  Orientation="Horizontal" >
+                        <TextBlock Text="Номер детали:" FontWeight="Bold" Foreground="DarkRed" FontSize="13"/>
+                        <TextBlock Text="{Binding Path=RequiredPartNo}" FontWeight="Bold" FontSize="13" Foreground="DarkBlue"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Уровень:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Path=level}" FontWeight="Bold"/>
+                        <TextBlock Text="Количество:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Path=RequiredQuantity}" FontWeight="Bold" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid ShowGridLines="True" Name="Container">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TreeView x:Name="treeView" HorizontalAlignment="Left" Grid.Column="0" Width="{Binding ElementName=Container,Path=ActualWidth}"
+                  Background="AliceBlue"
+                  HorizontalContentAlignment="Left"
+                  />
     </Grid>
+
 </Window>
