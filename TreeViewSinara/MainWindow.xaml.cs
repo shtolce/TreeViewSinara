@@ -23,6 +23,12 @@ namespace TreeViewSinara
         public MainWindow()
         {
             InitializeComponent();
+            treeView.Items.Add("12312");
+
+
+
+
+
         }
     }
 }
