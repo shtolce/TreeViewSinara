@@ -41,13 +41,14 @@ namespace TreeViewSinara
                 ExpandAllNodes(childItem);
             }
         }
-
-        public MainWindow()
+        public List<TreeBoMDTO> list;
+        public List<string> listPartNo;
+        public void updateTree(string partNoStr)
         {
-            InitializeComponent();
+            treeView.Items.Clear();
             newtDataTemplateSelector = new tDataTemplateSelector();
             ProductBoMRepoSql repo = new ProductBoMRepoSql();
-            List<TreeBoMDTO> list = repo.getAllTree().ToList();
+            list = repo.getAllTree(partNoStr).ToList();
             ItemCollection allNodes = treeView.Items;
             var groupedList = from bomNode in list
                               orderby bomNode.level, bomNode.RequiredPartNo
@@ -57,7 +58,6 @@ namespace TreeViewSinara
             treeView.ItemTemplateSelector = newtDataTemplateSelector;
 
             TreeViewItem item = new TreeViewItem();
-
             foreach (var partNoGroupItem in groupedList)
             {
                 item.HeaderTemplate = FindResource("tSel") as DataTemplate;
@@ -72,7 +72,7 @@ namespace TreeViewSinara
                     itemChild = new TreeViewItem();
                     int bomItemlevel = 0;
                     int.TryParse(bomItem.level, out bomItemlevel);
-                    itemChild.Foreground = new SolidColorBrush(Color.FromRgb(220, (byte)(150*bomItemlevel), (byte)(160 * bomItemlevel)));
+                    itemChild.Foreground = new SolidColorBrush(Color.FromRgb(220, (byte)(150 * bomItemlevel), (byte)(160 * bomItemlevel)));
                     itemChild.HeaderTemplate = FindResource("tSel") as DataTemplate;
                     itemChild.HeaderTemplateSelector = newtDataTemplateSelector;
                     itemChild.Tag = bomItem.RequiredPartNo;
@@ -123,6 +123,20 @@ namespace TreeViewSinara
 
 
 
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            ProductBoMRepoSql repo = new ProductBoMRepoSql();
+            listPartNo = repo.getAllPartNo().ToList();
+            dropdownList.ItemsSource =listPartNo;
+        }
+
+        private void DropdownList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string partNoStr = dropdownList.SelectedItem as String;
+            updateTree(partNoStr);
 
         }
     }

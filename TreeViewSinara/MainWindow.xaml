@@ -19,9 +19,9 @@
                         <TextBlock Text="{Binding Path=RequiredPartNo}" FontWeight="Bold" FontSize="13" Foreground="DarkBlue"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Уровень:" FontWeight="Bold"/>
+                        <TextBlock Text="    Уровень:" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Path=level}" FontWeight="Bold"/>
-                        <TextBlock Text="Количество:" FontWeight="Bold"/>
+                        <TextBlock Text="         Количество:" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Path=RequiredQuantity}" FontWeight="Bold" />
                     </StackPanel>
 
@@ -32,10 +32,17 @@
     </Window.Resources>
 
     <Grid ShowGridLines="True" Name="Container">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <TreeView x:Name="treeView" HorizontalAlignment="Left" Grid.Column="0" Width="{Binding ElementName=Container,Path=ActualWidth}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="15*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" DataContext="list">
+        <Label >Выбор номера детали</Label>
+            <ComboBox x:Name="dropdownList" SelectionChanged="DropdownList_SelectionChanged"></ComboBox>
+        </StackPanel>
+
+        <TreeView x:Name="treeView" HorizontalAlignment="Left" Grid.Row="1" Width="{Binding ElementName=Container,Path=ActualWidth}"
                   Background="AliceBlue"
                   HorizontalContentAlignment="Left"
                   />
