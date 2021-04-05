@@ -39,7 +39,15 @@
 
         <StackPanel Grid.Row="0" DataContext="list">
         <Label >Выбор номера детали</Label>
-            <ComboBox x:Name="dropdownList" SelectionChanged="DropdownList_SelectionChanged"></ComboBox>
+            <ComboBox x:Name="dropdownList" SelectionChanged="DropdownList_SelectionChanged">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+
+
+            </ComboBox>
         </StackPanel>
 
         <TreeView x:Name="treeView" HorizontalAlignment="Left" Grid.Row="1" Width="{Binding ElementName=Container,Path=ActualWidth}"
